@@ -1,0 +1,150 @@
+1) SHEMA:
+
+ProjetBinome/
+│
+├── accueil.php
+├── like.php
+├── dislike.php
+├── connect.php/
+|__ PageClient.php
+|__ PageCommercant.php
+|
+└── photos/   ✅ OBLIGATOIRE
+     ├── 1.jpg
+     ├── 2.jpg
+     ├── 3.jpg
+
+	 
++PageClient/ (et ses pages adjascents)
+|__Panier.php
+	    |__Reservation.php
+			      |_HistoriqueReservCli.php
+
++PageCommercant/
+|__HistoriqueReserveCom.php
+|__StatueCli(gestion des statues des clients)
+
+2)Precisions importantes:y
+
++Pour chaque produit ajouter dans la pageCommercant.php le produit seras afficher dans la page d'accueil.php et PageClient.php
+  Ensuite chaque bien ajouter sera enregistrer dans la base qui sera ensuite recuperer par les pages concernants les utilisateurs
+
++ La page PageClient.php vas pouvoir ajouter des favoris aux choix ou les retiter.Chaque favoris sera Envoyer dans le panier ou se
+  fera le choix des reservarion . chaque bien ajouter en reservation vas etre mis dans une historique visible pour le client et les commerçants.
+
+
+
+3)SHEMA DE LA BASE DE DONNEE(mise a jour)
+
+Base de donnée : agence
+
+Tables:
+A)CREATE TABLE `bien` (
+  `idBien` int(11) NOT NULL,
+  `Type` enum('Appartement','Villa') DEFAULT NULL,
+  `Nom` varchar(50) DEFAULT NULL,
+  `Prix` int(10) UNSIGNED DEFAULT NULL,
+  `Adresse_Position` varchar(210) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `likes` int(11) DEFAULT 0,
+  `dislikes` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+B)
+CREATE TABLE `client` (
+  `idCli` int(11) NOT NULL,
+  `Adresse` varchar(150) DEFAULT NULL,
+  `Nom` varchar(50) DEFAULT NULL,
+  `Prenom` varchar(250) DEFAULT NULL,
+  `Telephone` varchar(20) DEFAULT NULL,
+  `mot_de_passeCl` varchar(200) DEFAULT NULL,
+  `genre` enum('Homme','Femme') DEFAULT NULL,
+  `Age` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+C)
+CREATE TABLE `commerciaux` (
+  `idCom` int(11) NOT NULL,
+  `Adresse` varchar(150) DEFAULT NULL,
+  `Nom` varchar(50) DEFAULT NULL,
+  `Prenom` varchar(250) DEFAULT NULL,
+  `Telephone` varchar(20) DEFAULT NULL,
+  `Profession` varchar(150) DEFAULT NULL,
+  `mot_de_passeC` varchar(200) DEFAULT NULL,
+  `Genre` enum('Homme','Femme') DEFAULT NULL,
+  `Age` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+D)
+CREATE TABLE `favoris` (
+  `id` int(11) NOT NULL,
+  `codeBien` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+E)
+CREATE TABLE `historique` (
+  `id` int(11) NOT NULL,
+  `codeCli` int(11) DEFAULT NULL,
+  `codeBien` int(11) DEFAULT NULL,
+  `codeReservation` int(11) NOT NULL,
+  `date_de_reservation` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+F)
+CREATE TABLE `inscription` (
+  `idIns` int(11) NOT NULL,
+  `codeCli` int(11) DEFAULT NULL,
+  `codeCom` int(11) DEFAULT NULL,
+  `PhotoCli` int(11) DEFAULT NULL,
+  `PhotoCom` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+G)
+CREATE TABLE `photobiens` (
+  `idPB` int(11) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `codeBien` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+H)
+CREATE TABLE `photoclients` (
+  `idPCL` int(11) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `codeClient` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+I)
+
+CREATE TABLE `photocommerciaux` (
+  `idPC` int(11) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `codeCom` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+K)
+CREATE TABLE `reservation` (
+  `id` int(11) NOT NULL,
+  `codeCli` int(11) DEFAULT NULL,
+  `codeBien` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+
+
+4) DIFFICULTEES RENCONTREE
+
+  + Formatage complet du code : ayant été fait par des codeurs différents meme si l'idee restait la meme le processus pour achever au resultat voulu se diffuerait d'un individue a un autre .
+
+    +Verification de la mise en oeuvre du code: divers test on été faite afin de voir si toutes les etapes etaient opérationnels et répondez aux besoins réclamer
+
++Arguments pour des optimisations necessaire: Chaque codeurs voudrait toujours voir si le code était optimisable mais necesairement on ne voudrais pas mettre des fonctionnalité qui vont pas être utiliser au final
+
+
+
+
